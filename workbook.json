@@ -1,0 +1,259 @@
+{
+  "version": "Notebook/1.0",
+  "items": [
+    {
+      "type": 1,
+      "content": {
+        "json": "## Ransomware Live Workbook\n<p align=\"center\">\n<img src=\"https://ransomware.live/ransomwarelive.png\" alt=\"logo\" style=\"width:200px\"></a>\n</p>\n---\n [Ransomware.live](https://ransomware.live/#/about) is a ransomware groups observatory based on ransomwatch and inspired by ransomlook.It is a ransomware leak site monitoring tool. It will scrape all of the entries on various ransomware leak sites. \n\nThe workbook is based on an updated KQL query developed by: [Gavin Knapp](https://github.com/m4nbat/KustQueryLanguage_kql/blob/main/nf_ransomware_leaksite_monitoring.md)"
+      },
+      "name": "text - 2"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let victims = externaldata(\n        victim:string,\n        country:string,\n        domain:string,\n        title:string,\n        summary:string,\n        url:string,\n        added:string,)\n[h@\"https://api.ransomware.live/allcyberattacks\"]\nwith(format=\"multijson\",ignoreFirstRecord=false);\nvictims\n| summarize count()",
+        "size": 3,
+        "title": "Total Victims",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "tiles",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "victim",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "Pre attack",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            },
+            {
+              "columnMatch": "url",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "View",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "count_",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "blue"
+            }
+          },
+          "showBorder": false
+        }
+      },
+      "customWidth": "20",
+      "name": "query - 2"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let victims = externaldata(\n        victim:string,\n        country:string,\n        domain:string,\n        title:string,\n        summary:string,\n        url:string,\n        added:string,)\n[h@\"https://api.ransomware.live/allcyberattacks\"]\nwith(format=\"multijson\",ignoreFirstRecord=false);\nvictims\n| summarize count() by country\n| order by count_ desc",
+        "size": 3,
+        "title": "Total Victims by Country",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "piechart",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "victim",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "Pre attack",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            },
+            {
+              "columnMatch": "url",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "View",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "count_",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "blue"
+            }
+          },
+          "showBorder": false
+        }
+      },
+      "customWidth": "30",
+      "name": "query - 2 - Copy"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let victims = externaldata(\n        victim:string,\n        country:string,\n        domain:string,\n        title:string,\n        summary:string,\n        url:string,\n        added:string,)\n[h@\"https://api.ransomware.live/allcyberattacks\"]\nwith(format=\"multijson\",ignoreFirstRecord=false);\nvictims\n| summarize dcount(victim) by todatetime(added) ",
+        "size": 0,
+        "title": "Total Victims by added date",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "visualization": "areachart",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "victim",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "Pre attack",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            },
+            {
+              "columnMatch": "url",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "View",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "tileSettings": {
+          "titleContent": {
+            "columnMatch": "count_",
+            "formatter": 12,
+            "formatOptions": {
+              "palette": "blue"
+            }
+          },
+          "showBorder": false
+        }
+      },
+      "customWidth": "50",
+      "name": "query - 2 - Copy - Copy"
+    },
+    {
+      "type": 9,
+      "content": {
+        "version": "KqlParameterItem/1.0",
+        "parameters": [
+          {
+            "id": "7ad98ff1-a048-4253-9e61-a3fd22d4c565",
+            "version": "KqlParameterItem/1.0",
+            "name": "Search",
+            "label": "Search in summary",
+            "type": 1,
+            "timeContext": {
+              "durationMs": 86400000
+            },
+            "value": ""
+          }
+        ],
+        "style": "formHorizontal",
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces"
+      },
+      "name": "parameters - 5"
+    },
+    {
+      "type": 3,
+      "content": {
+        "version": "KqlItem/1.0",
+        "query": "let victims = externaldata(\n        victim:string,\n        country:string,\n        domain:string,\n        title:string,\n        summary:string,\n        url:string,\n        added:string,)\n[h@\"https://api.ransomware.live/allcyberattacks\"]\nwith(format=\"multijson\",ignoreFirstRecord=false);\nvictims\n| where summary contains \"{Search}\"",
+        "size": 0,
+        "queryType": 0,
+        "resourceType": "microsoft.operationalinsights/workspaces",
+        "gridSettings": {
+          "formatters": [
+            {
+              "columnMatch": "victim",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "Pre attack",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            },
+            {
+              "columnMatch": "url",
+              "formatter": 18,
+              "formatOptions": {
+                "thresholdsOptions": "icons",
+                "thresholdsGrid": [
+                  {
+                    "operator": "Default",
+                    "thresholdValue": null,
+                    "representation": "View",
+                    "text": "{0}{1}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "name": "query - 2 - Copy"
+    }
+  ],
+  "fallbackResourceIds": [
+    ""
+  ],
+  "fromTemplateId": "sentinel-UserWorkbook",
+  "$schema": "https://github.com/Microsoft/Application-Insights-Workbooks/blob/master/schema/workbook.json"
+}
